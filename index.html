@@ -3,260 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nikita Zagorodnev | Portfolio Hub</title>
+    <title>XENO // Hub</title>
     <style>
         :root {
-            --bg-color: #0d1117;
-            --card-bg: #161b22;
-            --accent-color: #58a6ff;
-            --text-main: #c9d1d9;
-            --text-muted: #8b949e;
-            --border-color: #30363d;
+            --bg: #050505;
+            --card-bg: #0d0d0d;
+            --accent: #ff3366;
+            --text: #efefef;
+            --muted: #666666;
+            --border: #1a1a1a;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Courier New', Courier, monospace;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            line-height: 1.6;
+            background-color: var(--bg);
+            color: var(--text);
             padding: 40px 20px;
+            display: flex;
+            justify-content: center;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .hub-container {
+            width: 100%;
+            max-width: 900px;
         }
 
         header {
-            text-align: center;
-            margin-bottom: 50px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 30px;
+            margin-bottom: 40px;
         }
 
-        .avatar-placeholder {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #2f80ed, #00f2fe);
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            font-weight: bold;
-            color: white;
-            box-shadow: 0 4px 20px rgba(88, 166, 255, 0.2);
-        }
-
-        header h1 {
-            font-size: 2.5rem;
+        .nickname {
+            font-size: 3rem;
+            font-weight: 900;
             color: #fff;
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
         }
 
-        header p {
-            color: var(--text-muted);
+        .nickname span {
+            color: var(--accent);
+        }
+
+        .real-name {
             font-size: 1.1rem;
+            color: var(--muted);
+            margin-top: 5px;
         }
 
-        .section-title {
-            font-size: 1.5rem;
-            color: #fff;
-            margin: 40px 0 20px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .skills-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .skill-tag {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: var(--accent-color);
-            transition: all 0.2s ease;
-        }
-
-        .skill-tag:hover {
-            background-color: var(--border-color);
-            transform: translateY(-2px);
-        }
-
-        .projects-grid {
+        .grid {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
         }
 
-        @media (min-width: 600px) {
-            .projects-grid {
-                grid-template-columns: 1fr 1fr;
-            }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 25px;
+            position: relative;
+            transition: all 0.2s ease;
         }
 
-        .project-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 24px;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
         }
 
-        .project-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-color);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        .card-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.75rem;
+            background: var(--border);
+            padding: 2px 8px;
+            color: var(--accent);
+            font-weight: bold;
         }
 
-        .project-card h3 {
+        .card h3 {
+            font-size: 1.4rem;
             color: #fff;
             margin-bottom: 10px;
-            font-size: 1.3rem;
         }
 
-        .project-card p {
-            color: var(--text-muted);
+        .card p {
+            color: #999;
             font-size: 0.95rem;
-            margin-bottom: 16px;
-            flex-grow: 1;
+            line-height: 1.5;
+            margin-bottom: 20px;
         }
 
-        .project-links a {
-            color: var(--accent-color);
+        .btn {
+            display: inline-block;
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 8px 16px;
             text-decoration: none;
+            font-weight: bold;
             font-size: 0.9rem;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
+            transition: all 0.2s;
         }
 
-        .project-links a:hover {
-            text-decoration: underline;
+        .btn:hover {
+            background: var(--accent);
+            color: #fff;
         }
 
         footer {
             margin-top: 60px;
-            text-align: center;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid var(--border);
             padding-top: 20px;
-        }
-
-        .social-links {
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 15px;
+            justify-content: space-between;
+            color: var(--muted);
+            font-size: 0.9rem;
         }
 
-        .social-links a {
-            color: var(--text-main);
+        footer a {
+            color: var(--text);
             text-decoration: none;
-            transition: color 0.2s;
-            font-weight: 500;
         }
 
-        .social-links a:hover {
-            color: var(--accent-color);
-        }
-
-        .copyright {
-            font-size: 0.85rem;
-            color: var(--text-muted);
+        footer a:hover {
+            color: var(--accent);
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div class="hub-container">
         <header>
-            <!-- Сюда вместо букв NZ можно будет вставить свою фотку через тег <img>, если захочешь -->
-            <div class="avatar-placeholder">NZ</div>
-            <h1>Никита Загороднев</h1>
-            <p>Python разработчик & Создатель инструментов</p>
+            <div class="nickname">XENO<span>.</span></div>
+            <div class="real-name">Python Developer Hub</div>
         </header>
 
-        <section id="about">
-            <div class="section-title">📌 Обо мне</div>
-            <p>Привет! Я занимаюсь программированием на Python и созданием полезных интерактивных инструментов. Мне нравится разрабатывать логику для автоматизации, продумывать игровые механики и собирать удобные хабы для проектов.</p>
-        </section>
-
-        <section id="skills">
-            <div class="section-title">⚡ Навыки</div>
-            <div class="skills-grid">
-                <span class="skill-tag">Python</span>
-                <span class="skill-tag">Discord.py / Nextcord</span>
-                <span class="skill-tag">Git & GitHub</span>
-                <span class="skill-tag">Zed Editor</span>
-                <span class="skill-tag">Blender 3D</span>
-                <span class="skill-tag">Разработка инструментов</span>
+        <div class="grid">
+            <!-- Проект 1 -->
+            <div class="card">
+                <div class="card-tag">BOT</div>
+                <h3>Money!</h3>
+                <p>Discord-бот со сложной игровой экономикой, механикой питомцев, системой ухода и интерактивным администрированием.</p>
+                <a href="https://github.com" class="btn" target="_blank">OPEN PROJECT</a>
             </div>
-        </section>
 
-        <section id="projects">
-            <div class="section-title">🛠 Мои проекты</div>
-            <div class="projects-grid">
-
-                <!-- Карточка проекта 1 -->
-                <div class="project-card">
-                    <div>
-                        <h3>Discord Bot «Money!»</h3>
-                        <p>Многофункциональный Discord-бот с развитой игровой экономикой, системой питомцев (механики кормления, ухода) и удобной панелью администратора прямо через команды.</p>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://github.com" target="_blank">Посмотреть код →</a>
-                    </div>
-                </div>
-
-                <!-- Карточка проекта 2 -->
-                <div class="project-card">
-                    <div>
-                        <h3>Cute Desktop Assistant</h3>
-                        <p>Концепт экранного ассистента (настольного питомца), который помогает в работе и развлекает, не мешая при этом игровому процессу или основным задачам.</p>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" style="color: var(--text-muted); pointer-events: none;">В разработке</a>
-                    </div>
-                </div>
-
+            <!-- Проект 2 -->
+            <div class="card">
+                <div class="card-tag">DEV</div>
+                <h3>Python Tools</h3>
+                <p>Набор скриптов автоматизации, утилит для работы с данными и кастомных программных решений.</p>
+                <a href="https://github.com" class="btn" target="_blank">VIEW CODE</a>
             </div>
-        </section>
+
+            <!-- Проект 3 -->
+            <div class="card">
+                <div class="card-tag">3D</div>
+                <h3>Blender Assets</h3>
+                <p>Галерея трехмерных моделей, элементов интерфейса и графических концептов для сторонних проектов.</p>
+                <a href="https://github.com" class="btn" target="_blank">EXPLORE</a>
+            </div>
+        </div>
 
         <footer>
-            <div class="social-links">
-                <a href="https://github.com" target="_blank">GitHub</a>
-                <a href="https://discord.com" target="_blank">Discord</a>
-            </div>
-            <div class="copyright">
-                &copy; 2026 Никита Загороднев. Все права защищены.
+            <div>&copy; 2026 XENO</div>
+            <div>
+                <a href="https://github.com" target="_blank">GITHUB</a> // 
+                <a href="https://discord.com" target="_blank">DISCORD</a>
             </div>
         </footer>
     </div>
