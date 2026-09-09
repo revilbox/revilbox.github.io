@@ -1,303 +1,839 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XENO // Hub</title>
-    <style>
-        :root {
-            --bg: #030303;
-            --card-bg: rgba(18, 18, 20, 0.6);
-            --card-hover-bg: rgba(25, 25, 28, 0.8);
-            --border: rgba(255, 255, 255, 0.04);
-            --border-hover: rgba(255, 255, 255, 0.12);
-            --text-main: #f5f5f7;
-            --text-muted: #86868b;
-            --status-green: #00e676;
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>XENO • Portfolio</title>
+    
+    <!-- FAVICON -->
+    <link rel="icon" type="image/jpeg" href="ava.jpg">
+    <link rel="apple-touch-icon" href="ava.jpg">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+    <style>
+        /* ---------- БАЗА ДЛЯ ПЕРЕВОДА ---------- */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
+            box-sizing: border-box;
         }
 
         body {
-            background-color: var(--bg);
-            color: var(--text-main);
-            padding: 100px 20px;
-            display: flex;
-            justify-content: center;
+            font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            padding: 2rem 1.5rem;
             min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
+            opacity: 0;
+            animation: bodyFade 0.8s ease forwards;
+            transition: background 0.3s ease, color 0.3s ease;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
 
-        body::before, body::after {
-            content: "";
-            position: fixed;
-            width: 500px;
-            height: 500px;
-            border-radius: 50%;
-            filter: blur(140px);
-            z-index: -1;
-            opacity: 0.12;
+        body, h1, h2, h3, h4, p, span, a, div, section, header, footer {
+            font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* ---------- ROOT VARIABLES ---------- */
+        :root {
+            --bg-primary: #0d0d0d;
+            --bg-secondary: #111111;
+            --bg-card: #111111;
+            --bg-hover: #141414;
+            --border-color: #1c1c1c;
+            --border-hover: #3a2a1a;
+            --text-primary: #f0f0f0;
+            --text-secondary: #c8c8c8;
+            --text-muted: #999;
+            --text-dim: #888;
+            --text-dark: #4a4a4a;
+            --accent: #b87333;
+            --accent-hover: #d49050;
+            --shadow: rgba(200, 120, 60, 0.1);
+            --shadow-hover: rgba(200, 120, 60, 0.2);
+            --badge-bg: #181818;
+            --tag-bg: #181818;
+            --tag-border: #262626;
+            --footer-border: #1a1a1a;
+            --secret-color: #1a1a1a;
+            --secret-hover: #3a3a3a;
+        }
+
+        /* ---------- СВЕТЛАЯ ТЕМА ---------- */
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-primary: #f5f5f5;
+                --bg-secondary: #ffffff;
+                --bg-card: #ffffff;
+                --bg-hover: #f0f0f0;
+                --border-color: #e0e0e0;
+                --border-hover: #b87333;
+                --text-primary: #1a1a1a;
+                --text-secondary: #2a2a2a;
+                --text-muted: #555;
+                --text-dim: #666;
+                --text-dark: #888;
+                --accent: #b87333;
+                --accent-hover: #a06020;
+                --shadow: rgba(200, 120, 60, 0.08);
+                --shadow-hover: rgba(200, 120, 60, 0.15);
+                --badge-bg: #f0f0f0;
+                --tag-bg: #f0f0f0;
+                --tag-border: #d0d0d0;
+                --footer-border: #e0e0e0;
+                --secret-color: #d0d0d0;
+                --secret-hover: #a0a0a0;
+            }
+
+            .hero::before {
+                background: radial-gradient(circle at 30% 40%, rgba(200, 120, 60, 0.06) 0%, transparent 60%) !important;
+            }
+
+            .footer .secret {
+                color: #d0d0d0 !important;
+            }
+
+            .footer:hover .secret {
+                color: #a0a0a0 !important;
+            }
+
+            .footer .meme-secret {
+                opacity: 0.15 !important;
+            }
+
+            .footer:hover .meme-secret {
+                opacity: 0.5 !important;
+            }
+        }
+
+        /* ---------- ANIMATIONS ---------- */
+        @keyframes bodyFade {
+            to { opacity: 1; }
+        }
+
+        @keyframes introUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .intro-item {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: introUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .i1 { animation-delay: 0.1s; }
+        .i2 { animation-delay: 0.25s; }
+        .i3 { animation-delay: 0.40s; }
+        .i4 { animation-delay: 0.55s; }
+        .i5 { animation-delay: 0.70s; }
+        .i6 { animation-delay: 0.85s; }
+
+        /* ---------- HEADER ---------- */
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 3.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            padding: 2.5rem 2.5rem 3rem 2.5rem;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -60%;
+            left: -60%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 40%, rgba(200, 120, 60, 0.04) 0%, transparent 60%);
             pointer-events: none;
         }
-        body::before {
-            top: -10%;
-            left: -10%;
-            background: radial-gradient(circle, #5e5ce6, transparent 70%);
-            animation: floatAmbient 12s ease-in-out infinite alternate;
-        }
-        body::after {
-            bottom: -10%;
-            right: -10%;
-            background: radial-gradient(circle, #00f2fe, transparent 70%);
-            animation: floatAmbient 16s ease-in-out infinite alternate-reverse;
+
+        .avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: url('ava.jpg') center/cover;
+            flex-shrink: 0;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 0 40px var(--shadow);
+            transition: 0.4s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
 
-        @keyframes floatAmbient {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(40px, 30px) scale(1.1); }
+        .avatar:hover {
+            transform: scale(1.04);
+            border-color: var(--accent);
+            box-shadow: 0 0 60px var(--shadow-hover);
         }
 
-        .hub-container {
-            width: 100%;
-            max-width: 760px;
-            opacity: 0;
-            transform: translateY(15px);
-            animation: fadeInContainer 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .hero-text {
+            position: relative;
+            z-index: 1;
+            min-width: 200px;
+            flex: 1;
         }
 
-        @keyframes fadeInContainer {
-            to { opacity: 1; transform: translateY(0); }
+        .hero-text .label {
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 0.2rem;
+            font-weight: 600;
         }
 
-        header {
-            margin-bottom: 60px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        .hero-text h1 {
+            font-size: 3.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            margin-bottom: 0.3rem;
         }
 
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            padding: 6px 12px;
-            border-radius: 100px;
-            width: fit-content;
+        .hero-text .desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 460px;
+        }
+
+        .hero-text .badge {
+            display: inline-block;
+            margin-top: 1.2rem;
+            background: var(--badge-bg);
+            padding: 0.3rem 1.2rem;
+            border-radius: 50px;
             font-size: 0.75rem;
             font-weight: 600;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            text-transform: uppercase;
+            color: var(--accent);
+            border: 1px solid var(--border-color);
+            letter-spacing: 0.5px;
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
 
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            background-color: var(--status-green);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--status-green);
-            animation: pulse 2s infinite;
+        .hero-text .badge i {
+            margin-right: 6px;
+            font-size: 0.7rem;
         }
 
-        @keyframes pulse {
-            0% { opacity: 0.5; box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.4); }
-            70% { opacity: 1; box-shadow: 0 0 0 6px rgba(0, 230, 118, 0); }
-            100% { opacity: 0.5; box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
-        }
-
-        .nickname {
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: var(--text-main);
-            letter-spacing: -0.04em;
-        }
-
-        .tagline {
-            font-size: 1.05rem;
-            color: var(--text-muted);
-            font-weight: 400;
-        }
-
-        .grid {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 30px;
-            border-radius: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 30px;
-            transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-                        background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .card:hover {
-            border-color: var(--border-hover);
-            background-color: var(--card-hover-bg);
-            transform: scale(1.01);
-        }
-
-        .card-main {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .card-meta {
+        /* ---------- SECTION ---------- */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.8rem;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: color 0.3s ease;
+            flex-wrap: wrap;
         }
 
-        .card h3 {
-            font-size: 1.25rem;
-            color: var(--text-main);
-            font-weight: 600;
-            letter-spacing: -0.01em;
+        .section-title .num {
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            font-weight: 400;
         }
 
-        .card-tag {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
+        .section-title i {
+            color: var(--accent);
+            font-size: 1.2rem;
         }
 
-        .card p {
-            color: var(--text-muted);
+        .section-sub {
+            color: var(--text-dim);
+            max-width: 650px;
+            margin-bottom: 2.2rem;
             font-size: 0.95rem;
-            line-height: 1.5;
-            max-width: 520px;
+            transition: color 0.3s ease;
         }
 
-        .btn-arrow {
-            width: 42px;
-            height: 42px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            border-radius: 50%;
+        /* ---------- GRID ---------- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 3.5rem;
+        }
+
+        /* ---------- PROJECT CARDS ---------- */
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.8rem 1.8rem 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-hover);
+            background: var(--bg-hover);
+            box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.8);
+        }
+
+        .project-card .card-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 0.8rem;
+        }
+
+        .project-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+            transition: color 0.3s ease;
+        }
+
+        .project-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .project-card .tags {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-main);
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .project-card .tags span {
+            background: var(--tag-bg);
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.15rem 0.9rem;
+            border-radius: 50px;
+            border: 1px solid var(--tag-border);
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .project-card .card-link {
+            color: var(--accent);
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+            border-bottom: 1px solid transparent;
+        }
+
+        .project-card .card-link:hover {
+            color: var(--accent-hover);
+            border-bottom-color: var(--accent);
+        }
+
+        .project-card .card-link i {
+            font-size: 0.8rem;
+            transition: 0.2s;
+        }
+
+        .project-card .card-link:hover i {
+            transform: translateX(4px);
+        }
+
+        .project-card.soon {
+            opacity: 0.4;
+            border-style: dashed;
+            border-color: var(--border-color);
+        }
+
+        .project-card.soon h3 {
+            color: var(--text-dark);
+        }
+
+        .project-card.soon p {
+            color: var(--text-dark);
+        }
+
+        .project-card.soon .card-icon {
+            color: var(--text-dark);
+        }
+
+        .project-card .easter {
+            display: block;
+            font-size: 0.55rem;
+            color: var(--text-dark);
+            margin-top: 0.4rem;
+            user-select: none;
+            letter-spacing: 0.3px;
+            opacity: 0.3;
+            transition: 0.3s ease;
+        }
+
+        .project-card:hover .easter {
+            opacity: 0.8;
+            color: var(--text-muted);
+        }
+
+        /* ---------- SKILLS ---------- */
+        .skills-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .skills-wrap span {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 0.4rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.25s ease;
+            letter-spacing: 0.3px;
+            cursor: default;
+            white-space: nowrap;
+        }
+
+        .skills-wrap span:hover {
+            border-color: var(--accent);
+            background: var(--bg-hover);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ---------- CONTACTS ---------- */
+        .contact-links {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            margin-top: 0.3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            background: var(--bg-card);
+            padding: 0.7rem 1.8rem;
+            border-radius: 40px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .contact-links a i {
+            color: var(--accent);
+            font-size: 1.2rem;
+            width: 1.4rem;
+            text-align: center;
             flex-shrink: 0;
         }
 
-        .card:hover .btn-arrow {
-            background: #fff;
-            color: #000;
-            border-color: #fff;
-            transform: rotate(-45deg);
+        .contact-links a:hover {
+            border-color: var(--accent);
+            background: var(--bg-hover);
+            transform: translateY(-2px);
+            color: var(--text-primary);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
-        footer {
-            margin-top: 80px;
-            border-top: 1px solid var(--border);
-            padding-top: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
+        /* ---------- FOOTER ---------- */
+        .footer {
+            margin-top: 3rem;
+            text-align: center;
+            color: var(--text-dark);
+            font-size: 0.75rem;
+            border-top: 1px solid var(--footer-border);
+            padding-top: 2rem;
+            letter-spacing: 0.5px;
+            position: relative;
+            transition: color 0.3s ease, border-color 0.3s ease;
         }
 
-        .social-links {
-            display: flex;
-            gap: 24px;
+        .footer .secret {
+            display: block;
+            color: var(--secret-color);
+            font-size: 0.6rem;
+            margin-top: 0.3rem;
+            transition: 0.3s ease;
+            user-select: none;
         }
 
-        .social-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s ease;
-            font-weight: 500;
+        .footer:hover .secret {
+            color: var(--secret-hover);
         }
 
-        .social-links a:hover {
-            color: var(--text-main);
+        .footer .meme-secret {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            background: url('dvizhuha.jpg') center/cover;
+            border-radius: 3px;
+            opacity: 0.05;
+            transition: 0.4s ease;
+            filter: grayscale(1);
+            vertical-align: middle;
+            margin-left: 6px;
+            border: 1px solid transparent;
+        }
+
+        .footer:hover .meme-secret {
+            opacity: 0.3;
+            filter: grayscale(0);
+            border-color: var(--border-color);
+            transform: scale(1.3);
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.8rem;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.8rem 1.2rem;
+                gap: 1.5rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.6rem;
+            }
+
+            .hero-text .desc {
+                font-size: 0.95rem;
+                margin: 0 auto;
+            }
+
+            .avatar {
+                width: 150px;
+                height: 150px;
+            }
+
+            .section-title {
+                font-size: 1.3rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+
+            .contact-links {
+                justify-content: center;
+            }
+
+            .contact-links a {
+                font-size: 0.85rem;
+                padding: 0.5rem 1.2rem;
+                flex: 1 1 auto;
+                min-width: 120px;
+                justify-content: center;
+                white-space: nowrap;
+            }
+
+            .skills-wrap {
+                justify-content: center;
+            }
+
+            .skills-wrap span {
+                font-size: 0.7rem;
+                padding: 0.3rem 1rem;
+                white-space: nowrap;
+            }
+
+            .project-card {
+                padding: 1.4rem;
+            }
+
+            .project-card p {
+                font-size: 0.85rem;
+            }
+
+            .section-sub {
+                font-size: 0.9rem;
+            }
+
+            .footer {
+                font-size: 0.65rem;
+                padding-top: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .hero-text .badge {
+                font-size: 0.65rem;
+                padding: 0.25rem 1rem;
+            }
+
+            .footer .meme-secret {
+                width: 18px;
+                height: 18px;
+                opacity: 0.1;
+            }
+
+            .footer:hover .meme-secret {
+                opacity: 0.4;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .avatar {
+                width: 120px;
+                height: 120px;
+            }
+
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .hero {
+                padding: 1.2rem 0.8rem;
+            }
+
+            .contact-links a {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+                min-width: 80px;
+                gap: 6px;
+                white-space: nowrap;
+            }
+
+            .contact-links a i {
+                font-size: 0.9rem;
+                width: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+            }
+
+            .project-card .tags span {
+                font-size: 0.55rem;
+                padding: 0.1rem 0.6rem;
+            }
+
+            .footer .meme-secret {
+                width: 15px;
+                height: 15px;
+                opacity: 0.12;
+            }
+
+            .footer:hover .meme-secret {
+                opacity: 0.4;
+            }
+        }
+
+        /* ---------- ТАЧ-УСТРОЙСТВА ---------- */
+        @media (hover: none) {
+            .project-card:hover {
+                transform: none;
+                border-color: var(--border-color);
+                background: var(--bg-card);
+                box-shadow: none;
+            }
+
+            .project-card:active {
+                transform: scale(0.98);
+                border-color: var(--border-hover);
+            }
+
+            .avatar:hover {
+                transform: none;
+                border-color: var(--border-color);
+                box-shadow: 0 0 40px var(--shadow);
+            }
+
+            .avatar:active {
+                transform: scale(0.98);
+            }
+
+            .contact-links a:hover {
+                transform: none;
+                border-color: var(--border-color);
+                background: var(--bg-card);
+                color: var(--text-secondary);
+                box-shadow: none;
+            }
+
+            .contact-links a:active {
+                transform: scale(0.97);
+                border-color: var(--accent);
+                background: var(--bg-hover);
+            }
+
+            .skills-wrap span:hover {
+                border-color: var(--border-color);
+                background: var(--bg-card);
+                color: var(--text-muted);
+                transform: none;
+                box-shadow: none;
+            }
+
+            .skills-wrap span:active {
+                border-color: var(--accent);
+                background: var(--bg-hover);
+                color: var(--text-primary);
+                transform: translateY(-2px);
+            }
+
+            .footer .secret {
+                color: var(--secret-hover);
+            }
+
+            .footer .meme-secret {
+                opacity: 0.15;
+            }
+
+            .footer:active .meme-secret {
+                opacity: 0.4;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="hub-container">
-        <header>
-            <div class="status-badge">
-                <div class="status-dot"></div>
-                Active // Production
-            </div>
-            <div class="nickname">XENO</div>
-            <div class="tagline">Python Developer Hub</div>
-        </header>
+<div class="container">
 
-        <div class="grid">
-            <div class="card">
-                <div class="card-main">
-                    <div class="card-meta">
-                        <h3>Money!</h3>
-                        <div class="card-tag">Bot</div>
-                    </div>
-                    <p>Discord-бот со сложной игровой экономикой, механикой питомцев, системой ухода и интерактивным администрированием.</p>
-                </div>
-                <a href="https://github.com" class="btn-arrow" target="_blank">→</a>
-            </div>
-
-            <div class="card">
-                <div class="card-main">
-                    <div class="card-meta">
-                        <h3>Python Tools</h3>
-                        <div class="card-tag">Dev</div>
-                    </div>
-                    <p>Набор скриптов автоматизации, утилит для работы с данными и кастомных программных решений.</p>
-                </div>
-                <a href="https://github.com" class="btn-arrow" target="_blank">→</a>
-            </div>
-
-            <div class="card">
-                <div class="card-main">
-                    <div class="card-meta">
-                        <h3>Blender Assets</h3>
-                        <div class="card-tag">3D</div>
-                    </div>
-                    <p>Галерея трехмерных моделей, элементов интерфейса и графических концептов для сторонних проектов.</p>
-                </div>
-                <a href="https://github.com" class="btn-arrow" target="_blank">→</a>
+    <!-- ============ HEADER ============ -->
+    <header class="hero intro-item i1">
+        <div class="avatar"></div>
+        <div class="hero-text">
+            <div class="label"><i class="fas fa-terminal"></i> // portfolio</div>
+            <h1>XENO</h1>
+            <p class="desc">I make stuff for games and web. Minecraft resource packs, small tools, and random experiments.</p>
+            <div class="badge">
+                <i class="fas fa-map-pin"></i> Russia / remote
             </div>
         </div>
+    </header>
 
-        <footer>
-            <div>&copy; 2026 XENO</div>
-            <div class="social-links">
-                <a href="https://github.com" target="_blank">GitHub</a>
-                <a href="https://discord.com" target="_blank">Discord</a>
+    <!-- ============ ABOUT ============ -->
+    <section class="intro-item i2">
+        <h2 class="section-title">
+            <span class="num">#</span> about
+            <i class="fas fa-asterisk" style="font-size: 0.8rem; margin-left: 6px;"></i>
+        </h2>
+        <p class="section-sub">
+            I'm XENO. Been messing with Minecraft for years, making textures and tweaking stuff. 
+            Lately I've been getting into web dev too. This is where I dump my projects — nothing too serious, 
+            just things I actually use. Currently working on Revil Pack, a resource pack that's mostly vanilla 
+            but with a dark GUI overhaul, custom cursor, and some sneaky references. You know, the usual.
+        </p>
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section class="intro-item i3">
+        <h2 class="section-title">
+            <span class="num">#</span> projects
+            <i class="fas fa-folder-open" style="font-size: 0.9rem; margin-left: 6px;"></i>
+        </h2>
+        <div class="grid">
+
+            <!-- REVIL PACK -->
+            <div class="project-card">
+                <div class="card-icon"><i class="fas fa-cube"></i></div>
+                <h3>Revil Pack</h3>
+                <p>Minecraft resource pack that keeps everything vanilla — except the GUI goes dark, cursor gets a makeover, and there are some references hidden around. For 1.21.10-1.21.11.</p>
+                <div class="tags">
+                    <span>Minecraft</span>
+                    <span>1.21.10-1.21.11</span>
+                    <span>vanilla+</span>
+                </div>
+                <a href="https://revilbox.github.io/revil_pack/download" target="_blank" class="card-link">
+                    download <i class="fas fa-arrow-right"></i>
+                </a>
+                <span class="easter">definitely not a rickroll</span>
             </div>
-        </footer>
+
+            <!-- COMING SOON -->
+            <div class="project-card soon">
+                <div class="card-icon"><i class="fas fa-plus-circle"></i></div>
+                <h3>something new</h3>
+                <p>Got a few ideas brewing. Might be a tool, might be a modpack. We'll see.</p>
+                <div class="tags">
+                    <span>soon</span>
+                </div>
+                <span class="easter">patience is a virtue</span>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section class="intro-item i4">
+        <h2 class="section-title">
+            <span class="num">#</span> stack
+            <i class="fas fa-microchip" style="font-size: 0.9rem; margin-left: 6px;"></i>
+        </h2>
+        <div class="skills-wrap">
+            <span>HTML / CSS</span>
+            <span>Python</span>
+            <span>Git</span>
+            <span>Minecraft Resource Packs</span>
+            <span>Blender (basic)</span>
+        </div>
+    </section>
+
+    <!-- ============ CONTACTS ============ -->
+    <section class="intro-item i5">
+        <h2 class="section-title">
+            <span class="num">#</span> contacts
+            <i class="fas fa-paper-plane" style="font-size: 0.9rem; margin-left: 6px;"></i>
+        </h2>
+        <div class="contact-links">
+            <a href="https://github.com/revilbox" target="_blank">
+                <i class="fab fa-github"></i> revilbox
+            </a>
+            <a href="#" target="_blank" style="opacity: 0.5; cursor: default; pointer-events: none;">
+                <i class="fab fa-discord"></i> discord (soon)
+            </a>
+            <a href="mailto:revilbox@gmail.com">
+                <i class="fas fa-envelope"></i> revilbox@gmail.com
+            </a>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <div class="footer intro-item i6">
+        <p>© 2026 XENO. built on GitHub Pages <i class="fas fa-heart"></i></p>
+        <span class="secret">if you're reading this, you have too much free time</span>
+        <span class="meme-secret"></span>
     </div>
+
+</div>
 
 </body>
 </html>
