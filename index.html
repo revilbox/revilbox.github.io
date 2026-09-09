@@ -3,138 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XENO // Hub</title>
+    <title>XENO</title>
     <style>
         :root {
-            --bg: #050505;
-            --card-bg: #0d0d0d;
-            --accent: #ff3366;
-            --text: #efefef;
-            --muted: #666666;
-            --border: #1a1a1a;
+            --bg: #0b0b0c;
+            --card-bg: #131315;
+            --border: #222225;
+            --text-main: #f5f5f7;
+            --text-muted: #86868b;
+            --accent: #ffffff;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
             background-color: var(--bg);
-            color: var(--text);
-            padding: 40px 20px;
+            color: var(--text-main);
+            padding: 80px 20px;
             display: flex;
             justify-content: center;
+            min-height: 100vh;
         }
 
         .hub-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 800px;
         }
 
         header {
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 30px;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
         .nickname {
-            font-size: 3rem;
-            font-weight: 900;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: -1px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.03em;
+            margin-bottom: 6px;
         }
 
-        .nickname span {
-            color: var(--accent);
-        }
-
-        .real-name {
-            font-size: 1.1rem;
-            color: var(--muted);
-            margin-top: 5px;
+        .tagline {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            font-weight: 400;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        @media (min-width: 600px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
 
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            padding: 25px;
-            position: relative;
-            transition: all 0.2s ease;
+            padding: 28px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
         }
 
         .card:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
+            border-color: #333338;
+            background-color: #161619;
         }
 
-        .card-tag {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 0.75rem;
-            background: var(--border);
-            padding: 2px 8px;
-            color: var(--accent);
-            font-weight: bold;
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 12px;
         }
 
         .card h3 {
-            font-size: 1.4rem;
-            color: #fff;
-            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: var(--text-main);
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .card-tag {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .card p {
-            color: #999;
+            color: var(--text-muted);
             font-size: 0.95rem;
             line-height: 1.5;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            flex-grow: 1;
         }
 
         .btn {
-            display: inline-block;
-            background: transparent;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            padding: 8px 16px;
+            display: inline-flex;
+            align-items: center;
+            color: var(--text-main);
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 500;
             font-size: 0.9rem;
-            transition: all 0.2s;
+            transition: opacity 0.2s ease;
         }
 
         .btn:hover {
-            background: var(--accent);
-            color: #fff;
+            opacity: 0.8;
+        }
+
+        .btn span {
+            margin-left: 4px;
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover .btn span {
+            transform: translateX(3px);
         }
 
         footer {
-            margin-top: 60px;
+            margin-top: 70px;
             border-top: 1px solid var(--border);
-            padding-top: 20px;
+            padding-top: 24px;
             display: flex;
             justify-content: space-between;
-            color: var(--muted);
-            font-size: 0.9rem;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
         }
 
-        footer a {
-            color: var(--text);
+        .social-links a {
+            color: var(--text-muted);
             text-decoration: none;
+            margin-left: 20px;
+            transition: color 0.2s ease;
         }
 
-        footer a:hover {
-            color: var(--accent);
+        .social-links a:hover {
+            color: var(--text-main);
         }
     </style>
 </head>
@@ -142,41 +162,53 @@
 
     <div class="hub-container">
         <header>
-            <div class="nickname">XENO<span>.</span></div>
-            <div class="real-name">Python Developer Hub</div>
+            <div class="nickname">XENO</div>
+            <div class="tagline">Python Developer Hub</div>
         </header>
 
         <div class="grid">
             <!-- Проект 1 -->
             <div class="card">
-                <div class="card-tag">BOT</div>
-                <h3>Money!</h3>
-                <p>Discord-бот со сложной игровой экономикой, механикой питомцев, системой ухода и интерактивным администрированием.</p>
-                <a href="https://github.com" class="btn" target="_blank">OPEN PROJECT</a>
+                <div>
+                    <div class="card-header">
+                        <h3>Money!</h3>
+                        <div class="card-tag">Bot</div>
+                    </div>
+                    <p>Discord-бот со сложной игровой экономикой, механикой питомцев, системой ухода и интерактивным администрированием.</p>
+                </div>
+                <a href="https://github.com" class="btn" target="_blank">Открыть проект <span>&rarr;</span></a>
             </div>
 
             <!-- Проект 2 -->
             <div class="card">
-                <div class="card-tag">DEV</div>
-                <h3>Python Tools</h3>
-                <p>Набор скриптов автоматизации, утилит для работы с данными и кастомных программных решений.</p>
-                <a href="https://github.com" class="btn" target="_blank">VIEW CODE</a>
+                <div>
+                    <div class="card-header">
+                        <h3>Python Tools</h3>
+                        <div class="card-tag">Dev</div>
+                    </div>
+                    <p>Набор скриптов автоматизации, утилит для работы с данными и кастомных программных решений.</p>
+                </div>
+                <a href="https://github.com" class="btn" target="_blank">Исходный код <span>&rarr;</span></a>
             </div>
 
             <!-- Проект 3 -->
             <div class="card">
-                <div class="card-tag">3D</div>
-                <h3>Blender Assets</h3>
-                <p>Галерея трехмерных моделей, элементов интерфейса и графических концептов для сторонних проектов.</p>
-                <a href="https://github.com" class="btn" target="_blank">EXPLORE</a>
+                <div>
+                    <div class="card-header">
+                        <h3>Blender Assets</h3>
+                        <div class="card-tag">3D</div>
+                    </div>
+                    <p>Галерея трехмерных моделей, элементов интерфейса и графических концептов для сторонних проектов.</p>
+                </div>
+                <a href="https://github.com" class="btn" target="_blank">Смотреть <span>&rarr;</span></a>
             </div>
         </div>
 
         <footer>
             <div>&copy; 2026 XENO</div>
-            <div>
-                <a href="https://github.com" target="_blank">GITHUB</a> // 
-                <a href="https://discord.com" target="_blank">DISCORD</a>
+            <div class="social-links">
+                <a href="https://github.com" target="_blank">GitHub</a>
+                <a href="https://discord.com" target="_blank">Discord</a>
             </div>
         </footer>
     </div>
