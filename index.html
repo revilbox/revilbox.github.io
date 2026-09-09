@@ -3,49 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XENO</title>
+    <title>XENO // Hub</title>
     <style>
         :root {
-            --bg: #0b0b0c;
-            --card-bg: #131315;
-            --border: #222225;
+            --bg: #030303;
+            --card-bg: rgba(18, 18, 20, 0.6);
+            --card-hover-bg: rgba(25, 25, 28, 0.8);
+            --border: rgba(255, 255, 255, 0.04);
+            --border-hover: rgba(255, 255, 255, 0.12);
             --text-main: #f5f5f7;
             --text-muted: #86868b;
-            --accent: #ffffff;
+            --status-green: #00e676;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
         body {
             background-color: var(--bg);
             color: var(--text-main);
-            padding: 80px 20px;
+            padding: 100px 20px;
             display: flex;
             justify-content: center;
             min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before, body::after {
+            content: "";
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(140px);
+            z-index: -1;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+        body::before {
+            top: -10%;
+            left: -10%;
+            background: radial-gradient(circle, #5e5ce6, transparent 70%);
+            animation: floatAmbient 12s ease-in-out infinite alternate;
+        }
+        body::after {
+            bottom: -10%;
+            right: -10%;
+            background: radial-gradient(circle, #00f2fe, transparent 70%);
+            animation: floatAmbient 16s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes floatAmbient {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, 30px) scale(1.1); }
         }
 
         .hub-container {
             width: 100%;
-            max-width: 800px;
+            max-width: 760px;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeInContainer 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInContainer {
+            to { opacity: 1; transform: translateY(0); }
         }
 
         header {
-            margin-bottom: 50px;
+            margin-bottom: 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 100px;
+            width: fit-content;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--status-green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--status-green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.4); }
+            70% { opacity: 1; box-shadow: 0 0 0 6px rgba(0, 230, 118, 0); }
+            100% { opacity: 0.5; box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
         }
 
         .nickname {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 700;
             color: var(--text-main);
-            letter-spacing: -0.03em;
-            margin-bottom: 6px;
+            letter-spacing: -0.04em;
         }
 
         .tagline {
@@ -55,90 +128,97 @@
         }
 
         .grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
-        }
-
-        @media (min-width: 600px) {
-            .grid {
-                grid-template-columns: 1fr 1fr;
-            }
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
         }
 
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            padding: 28px;
-            border-radius: 12px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 16px;
             display: flex;
-            flex-direction: column;
             justify-content: space-between;
-            transition: border-color 0.2s ease, background-color 0.2s ease;
+            align-items: center;
+            gap: 30px;
+            transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                        background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .card:hover {
-            border-color: #333338;
-            background-color: #161619;
+            border-color: var(--border-hover);
+            background-color: var(--card-hover-bg);
+            transform: scale(1.01);
         }
 
-        .card-header {
+        .card-main {
             display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 12px;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .card h3 {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             color: var(--text-main);
             font-weight: 600;
             letter-spacing: -0.01em;
         }
 
         .card-tag {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
-            font-weight: 500;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.03em;
         }
 
         .card p {
             color: var(--text-muted);
             font-size: 0.95rem;
             line-height: 1.5;
-            margin-bottom: 24px;
-            flex-grow: 1;
+            max-width: 520px;
         }
 
-        .btn {
-            display: inline-flex;
+        .btn-arrow {
+            width: 42px;
+            height: 42px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
             align-items: center;
+            justify-content: center;
             color: var(--text-main);
             text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: opacity 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            flex-shrink: 0;
         }
 
-        .btn:hover {
-            opacity: 0.8;
-        }
-
-        .btn span {
-            margin-left: 4px;
-            transition: transform 0.2s ease;
-        }
-
-        .card:hover .btn span {
-            transform: translateX(3px);
+        .card:hover .btn-arrow {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+            transform: rotate(-45deg);
         }
 
         footer {
-            margin-top: 70px;
+            margin-top: 80px;
             border-top: 1px solid var(--border);
-            padding-top: 24px;
+            padding-top: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -146,11 +226,16 @@
             font-size: 0.85rem;
         }
 
+        .social-links {
+            display: flex;
+            gap: 24px;
+        }
+
         .social-links a {
             color: var(--text-muted);
             text-decoration: none;
-            margin-left: 20px;
             transition: color 0.2s ease;
+            font-weight: 500;
         }
 
         .social-links a:hover {
@@ -162,45 +247,46 @@
 
     <div class="hub-container">
         <header>
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                Active // Production
+            </div>
             <div class="nickname">XENO</div>
             <div class="tagline">Python Developer Hub</div>
         </header>
 
         <div class="grid">
-            <!-- Проект 1 -->
             <div class="card">
-                <div>
-                    <div class="card-header">
+                <div class="card-main">
+                    <div class="card-meta">
                         <h3>Money!</h3>
                         <div class="card-tag">Bot</div>
                     </div>
                     <p>Discord-бот со сложной игровой экономикой, механикой питомцев, системой ухода и интерактивным администрированием.</p>
                 </div>
-                <a href="https://github.com" class="btn" target="_blank">Открыть проект <span>&rarr;</span></a>
+                <a href="https://github.com" class="btn-arrow" target="_blank">→</a>
             </div>
 
-            <!-- Проект 2 -->
             <div class="card">
-                <div>
-                    <div class="card-header">
+                <div class="card-main">
+                    <div class="card-meta">
                         <h3>Python Tools</h3>
                         <div class="card-tag">Dev</div>
                     </div>
                     <p>Набор скриптов автоматизации, утилит для работы с данными и кастомных программных решений.</p>
                 </div>
-                <a href="https://github.com" class="btn" target="_blank">Исходный код <span>&rarr;</span></a>
+                <a href="https://github.com" class="btn-arrow" target="_blank">→</a>
             </div>
 
-            <!-- Проект 3 -->
             <div class="card">
-                <div>
-                    <div class="card-header">
+                <div class="card-main">
+                    <div class="card-meta">
                         <h3>Blender Assets</h3>
                         <div class="card-tag">3D</div>
                     </div>
                     <p>Галерея трехмерных моделей, элементов интерфейса и графических концептов для сторонних проектов.</p>
                 </div>
-                <a href="https://github.com" class="btn" target="_blank">Смотреть <span>&rarr;</span></a>
+                <a href="https://github.com" class="btn-arrow" target="_blank">→</a>
             </div>
         </div>
 
