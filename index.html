@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>XENO • Portfolio</title>
     
-    <!-- FAVICON (круглая иконка) -->
-    <link rel="icon" type="image/jpeg" href="ava.jpg">
-    <link rel="apple-touch-icon" href="ava.jpg">
+    <!-- FAVICON -->
+    <link rel="icon" type="image/jpeg" href="ava_site.jpg">
+    <link rel="apple-touch-icon" href="ava_site.jpg">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,6 +22,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'JetBrains Mono', 'Courier New', monospace !important;
             background: var(--bg-primary);
@@ -29,8 +33,7 @@
             line-height: 1.7;
             padding: 2rem 1.5rem;
             min-height: 100vh;
-            opacity: 0;
-            animation: bodyFade 0.8s ease forwards;
+            opacity: 1;
             transition: background 0.3s ease, color 0.3s ease;
             word-break: break-word;
             overflow-wrap: break-word;
@@ -119,12 +122,12 @@
         }
 
         /* ---------- ANIMATIONS ---------- */
-        @keyframes bodyFade {
-            to { opacity: 1; }
-        }
-
         @keyframes introUp {
-            to {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
                 opacity: 1;
                 transform: translateY(0);
             }
@@ -174,7 +177,7 @@
             width: 180px;
             height: 180px;
             border-radius: 50%;
-            background: url('ava.jpg') center/cover;
+            background: url('ava_site.jpg') center/cover;
             flex-shrink: 0;
             border: 2px solid var(--border-color);
             box-shadow: 0 0 40px var(--shadow);
@@ -721,6 +724,22 @@
                 opacity: 0.4;
             }
         }
+
+        /* ---------- ФИКС ДЛЯ ПК (скролл наверх) ---------- */
+        @media (min-width: 769px) {
+            body {
+                padding-top: 0;
+                margin-top: 0;
+            }
+            
+            .container {
+                padding-top: 2rem;
+            }
+            
+            .hero {
+                margin-top: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -820,7 +839,7 @@
             <a href="#" target="_blank" style="opacity: 0.5; cursor: default; pointer-events: none;">
                 <i class="fab fa-discord"></i> discord (soon)
             </a>
-            <a href="mailto:revilbox@gmail.com" onclick="window.location.href='mailto:revilbox@gmail.com'; return false;">
+            <a href="mailto:revilbox@gmail.com" onclick="window.open('mailto:revilbox@gmail.com', '_blank'); return false;">
                 <i class="fas fa-envelope"></i> revilbox@gmail.com
             </a>
         </div>
