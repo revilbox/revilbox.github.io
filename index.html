@@ -13,15 +13,11 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- ВАЖНО: этот скрипт должен быть ДО всего остального, в самом верху head -->
+    <!-- Отключаем авто-восстановление скролла (единственный фикс который нужен) -->
     <script>
-        // Отключаем авто-восстановление скролла браузером
-        // Это решает проблему с прыжком на комментарии при обновлении
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
         }
-        // Принудительно ставим скролл наверх сразу же
-        window.scrollTo(0, 0);
     </script>
 
     <style>
@@ -869,50 +865,8 @@
 </div>
 
 <script>
-    // ============================================================
-    // ФИКС СКРОЛЛА
-    // ============================================================
-    // Giscus работает внутри iframe и иногда ставит фокус на себя,
-    // из-за чего браузер скроллит к нему. Отключаем это поведение.
-    
-    // 1. Отключаем авто-восстановление скролла браузером
-    if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-    }
-
-    // 2. Следим за позицией скролла и возвращаем её если Giscus попытается сдвинуть
-    var savedScrollY = 0;
-    var isGiscusLoaded = false;
-    var scrollLocked = false;
-
-    // Запоминаем позицию перед загрузкой Giscus
-    function saveScroll() {
-        savedScrollY = window.scrollY;
-    }
-
-    // Восстанавливаем позицию
-    function restoreScroll() {
-        if (scrollLocked) {
-            window.scrollTo(0, savedScrollY);
-        }
-    }
-
-    // Следим за скроллом — если он изменился без действия пользователя,
-    // значит Giscus его сдвинул
-    var lastScrollY = window.scrollY;
-    var userScrolling = false;
-    var scrollTimeout;
-
-    window.addEventListener('scroll', function() {
-        // если пользователь скроллит — снимаем блокировку
-        userScrolling = true;
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(function() {
-            userScrolling = false;
-        }, 100);
-    }, { passive: true });
-
-    // 3. Lazy load Giscus
+    // Giscus lazy load — грузится только когда пользователь доскроллит
+    // Никаких блокировок скролла, просто отложенная загрузка
     (function() {
         var container = document.getElementById('giscus-container');
         var loaded = false;
@@ -920,10 +874,6 @@
         function loadGiscus() {
             if (loaded) return;
             loaded = true;
-
-            // Запоминаем позицию ПЕРЕД загрузкой
-            saveScroll();
-            scrollLocked = true;
 
             var placeholder = container.querySelector('.giscus-placeholder');
             if (placeholder) placeholder.remove();
@@ -943,31 +893,9 @@
             script.setAttribute('data-lang', 'ru');
             script.setAttribute('crossorigin', 'anonymous');
             script.async = true;
-            
-            script.onload = function() {
-                // После загрузки Giscus — восстанавливаем позицию
-                setTimeout(function() {
-                    window.scrollTo(0, savedScrollY);
-                    scrollLocked = false;
-                }, 100);
-            };
-
             container.appendChild(script);
-
-            // На всякий случай блокируем любые попытки скролла на 1.5 сек
-            var lockInterval = setInterval(function() {
-                if (!userScrolling && Math.abs(window.scrollY - savedScrollY) > 5) {
-                    window.scrollTo(0, savedScrollY);
-                }
-            }, 50);
-
-            setTimeout(function() {
-                clearInterval(lockInterval);
-                scrollLocked = false;
-            }, 1500);
         }
 
-        // Загружаем при первом появлении секции на экране
         if ('IntersectionObserver' in window) {
             var observer = new IntersectionObserver(function(entries) {
                 entries.forEach(function(entry) {
@@ -987,20 +915,6 @@
             }, { passive: true });
         }
     })();
-
-    // 4. При загрузке страницы — принудительно скроллим наверх
-    window.addEventListener('load', function() {
-        if (!scrollLocked) {
-            window.scrollTo(0, 0);
-        }
-    });
-
-    // 5. При перезагрузке — тоже наверх
-    window.addEventListener('pageshow', function(event) {
-        if (event.persisted) {
-            window.scrollTo(0, 0);
-        }
-    });
 </script>
 
 </body>
