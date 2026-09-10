@@ -99,3 +99,55 @@ a[href*="github.com/giscus"],
 /* кнопка "Комментарий" */
 .gsc-comment-box button[type="submit"] {
     background: #b87333 !important;
+    color: #0d0d0d !important;
+    border-color: #b87333 !important;
+    font-weight: 600 !important;
+    padding: 0.4rem 1.2rem !important;
+    font-size: 0.85rem !important;
+}
+
+.gsc-comment-box button[type="submit"]:hover {
+    background: #d49050 !important;
+    border-color: #d49050 !important;
+}
+
+/* ============ СКРЫТИЕ РЕАКЦИЙ ============ */
+/* (они уже отключены через data-reactions-enabled="0", но на всякий) */
+.gsc-reactions {
+    display: none !important;
+}
+
+/* ============ СКРЫТИЕ "0 ОТКЛИКОВ" ============ */
+.gsc-comments-count,
+.gsc-comments-count-separator {
+    display: none !important;
+}
+
+/* ============ СКРЫТИЕ ПЕРЕКЛЮЧАТЕЛЯ "СТАРЫЕ/НОВЫЕ" ============ */
+.gsc-order-by-button {
+    display: none !important;
+}
+
+/* ============ СКРЫТИЕ ЗАГОЛОВКА "N КОММЕНТАРИЕВ" ============ */
+.gsc-comments > .gsc-header {
+    display: none !important;
+}
+
+/* уменьшаем аватарки */
+.gsc-comment-author-avatar img {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+/* уменьшаем шрифт всего */
+.gsc-comment-content,
+.gsc-comment-author,
+.gsc-reply-author {
+    font-size: 0.85rem !important;
+    line-height: 1.5 !important;
+}
+
+/* убираем лишние отступы */
+.gsc-replies {
+    padding-left: 1rem !important;
+}
