@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>XENO • Portfolio</title>
     
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YMEWMHFNEQ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-YMEWMHFNEQ');
+    </script>
+    
     <link rel="icon" type="image/jpeg" href="ava_site.jpg">
     <link rel="apple-touch-icon" href="ava_site.jpg">
     
@@ -13,7 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- Отключаем авто-восстановление скролла (единственный фикс который нужен) -->
+    <!-- Отключаем авто-восстановление скролла -->
     <script>
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
@@ -865,8 +874,6 @@
 </div>
 
 <script>
-    // Giscus lazy load — грузится только когда пользователь доскроллит
-    // Никаких блокировок скролла, просто отложенная загрузка
     (function() {
         var container = document.getElementById('giscus-container');
         var loaded = false;
