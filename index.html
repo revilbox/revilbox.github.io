@@ -38,7 +38,6 @@
             overflow-wrap: break-word;
         }
 
-        /* ФИКС: убираем всё что может сдвигать страницу вниз */
         body, h1, h2, h3, h4, p, span, a, div, section, header, footer {
             font-family: 'JetBrains Mono', 'Courier New', monospace !important;
         }
@@ -121,7 +120,7 @@
             }
         }
 
-        /* ---------- ANIMATIONS (фикс: элементы не сдвигают страницу) ---------- */
+        /* ---------- ANIMATIONS ---------- */
         @keyframes introUp {
             0% {
                 opacity: 0;
@@ -137,7 +136,6 @@
             opacity: 0;
             transform: translateY(20px);
             animation: introUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-            /* Важно: элементы изначально прозрачны, но НЕ занимают дополнительное место */
             will-change: transform, opacity;
         }
 
@@ -147,8 +145,8 @@
         .i4 { animation-delay: 0.35s; }
         .i5 { animation-delay: 0.45s; }
         .i6 { animation-delay: 0.55s; }
+        .i7 { animation-delay: 0.65s; }
 
-        /* ФИКС: убираем возможный отступ у первого элемента */
         .intro-item:first-child {
             margin-top: 0;
         }
@@ -479,6 +477,20 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
+        /* ---------- GISCUS (ОТЗЫВЫ) ---------- */
+        .giscus-wrap {
+            margin-bottom: 3.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .giscus-wrap .section-title {
+            margin-bottom: 1.2rem;
+        }
+
         /* ---------- FOOTER ---------- */
         .footer {
             margin-top: 3rem;
@@ -597,6 +609,10 @@
                 font-size: 0.9rem;
             }
 
+            .giscus-wrap {
+                padding: 1.2rem;
+            }
+
             .footer {
                 font-size: 0.65rem;
                 padding-top: 1.5rem;
@@ -653,6 +669,10 @@
             .project-card .tags span {
                 font-size: 0.55rem;
                 padding: 0.1rem 0.6rem;
+            }
+
+            .giscus-wrap {
+                padding: 0.8rem;
             }
 
             .footer .meme-secret {
@@ -732,7 +752,7 @@
             }
         }
 
-        /* ---------- ФИКС ДЛЯ ПК (скролл наверх) ---------- */
+        /* ---------- ФИКС ДЛЯ ПК ---------- */
         @media (min-width: 769px) {
             body {
                 padding-top: 0;
@@ -759,7 +779,7 @@
         <div class="hero-text">
             <div class="label"><i class="fas fa-terminal"></i> // portfolio</div>
             <h1>XENO</h1>
-            <p class="desc">I make stuff for games and web. Minecraft resource packs, small tools, and random experiments.</p>
+            <p class="desc">I'm a mod maker and programmer, I can create some utilities that will help in using with Windows</p>
             <div class="badge">
                 <i class="fas fa-map-pin"></i> Russia / remote
             </div>
@@ -773,13 +793,9 @@
             <i class="fas fa-asterisk" style="font-size: 0.8rem; margin-left: 6px;"></i>
         </h2>
         <p class="section-sub">
-            I'm XENO. I've been playing Minecraft for years, making textures, tweaking things, and generally messing around with whatever I can get my hands on. Recently, I've also gotten into web development.
-
-            This is where I put some of the projects I've made — nothing too serious, just things I actually use or enjoy working on.
-
-            Right now, I'm working on **revil_pack**, a resource pack that stays mostly vanilla but gives the game a darker UI, a custom cursor, and a few small references hidden here and there.
-
-            Nothing revolutionary. Just my stuff, made the way I like it.
+            Hi, I'm XENO. I'm a mod and resource pack maker. Currently, 
+            I only have my own resource pack ready, which I use for Minecraft. 
+            I also program various utilities for Windows, but that's all, lol XD
         </p>
     </section>
 
@@ -821,8 +837,31 @@
         </div>
     </section>
 
+    <!-- ============ ОТЗЫВЫ (GISCUS) ============ -->
+    <section class="giscus-wrap intro-item i4">
+        <h2 class="section-title">
+            <span class="num">#</span> reviews
+            <i class="fas fa-comments" style="font-size: 0.9rem; margin-left: 6px;"></i>
+        </h2>
+        <script src="https://giscus.app/client.js"
+                data-repo="revilbox/revilbox.github.io"
+                data-repo-id="R_kgDOUTgb-Q"
+                data-category="Ideas"
+                data-category-id="DIC_kwDOUTgb-c4DFRmB"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="preferred_color_scheme"
+                data-lang="ru"
+                crossorigin="anonymous"
+                async>
+        </script>
+    </section>
+
     <!-- ============ SKILLS ============ -->
-    <section class="intro-item i4">
+    <section class="intro-item i5">
         <h2 class="section-title">
             <span class="num">#</span> stack
             <i class="fas fa-microchip" style="font-size: 0.9rem; margin-left: 6px;"></i>
@@ -837,7 +876,7 @@
     </section>
 
     <!-- ============ CONTACTS ============ -->
-    <section class="intro-item i5">
+    <section class="intro-item i6">
         <h2 class="section-title">
             <span class="num">#</span> contacts
             <i class="fas fa-paper-plane" style="font-size: 0.9rem; margin-left: 6px;"></i>
@@ -856,7 +895,7 @@
     </section>
 
     <!-- ============ FOOTER ============ -->
-    <div class="footer intro-item i6">
+    <div class="footer intro-item i7">
         <p>© 2026 XENO. built on GitHub Pages <i class="fas fa-heart"></i></p>
         <span class="secret">if you're reading this, you have too much free time</span>
         <span class="meme-secret"></span>
@@ -865,12 +904,10 @@
 </div>
 
 <script>
-    // ФИКС: принудительно скроллим наверх после загрузки
     window.addEventListener('load', function() {
         window.scrollTo(0, 0);
     });
     
-    // ФИКС: если страница уже загружена из кеша
     if (document.readyState === 'complete') {
         window.scrollTo(0, 0);
     }
