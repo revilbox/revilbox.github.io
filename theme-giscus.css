@@ -1,0 +1,101 @@
+/* giscus-theme.css — кастомная тема под XENO portfolio */
+
+/* основные переменные */
+main {
+    --color-primer-canvas-backdrop: rgba(13, 13, 13, 0.8) !important;
+    --color-primer-canvas-sticky: rgba(17, 17, 17, 0.95) !important;
+    --color-primer-border-active: #b87333 !important;
+    --color-primer-border-contrast: rgba(200, 120, 60, 0.3) !important;
+    --color-primer-canvas-default: #111111 !important;
+    --color-primer-canvas-subtle: #141414 !important;
+    --color-primer-border-default: #1c1c1c !important;
+    --color-primer-fg-default: #c8c8c8 !important;
+    --color-primer-fg-muted: #999999 !important;
+    --color-primer-fg-subtle: #888888 !important;
+    --color-primer-accent-fg: #b87333 !important;
+    --color-primer-accent-emphasis: #b87333 !important;
+    --color-primer-accent-muted: rgba(200, 120, 60, 0.4) !important;
+    --color-primer-accent-subtle: rgba(200, 120, 60, 0.15) !important;
+    --color-primer-success-fg: #b87333 !important;
+    --color-primer-attention-fg: #b87333 !important;
+    --color-primer-severe-fg: #b87333 !important;
+    --color-primer-danger-fg: #b87333 !important;
+    --color-primer-done-fg: #b87333 !important;
+    --color-primer-sponsors-fg: #b87333 !important;
+}
+
+/* шрифт моноширинный */
+body, main, button, a, input, textarea, span, div, p {
+    font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+}
+
+/* ============ СКРЫТИЕ "УПРАВЛЯЕТСЯ GISCUS" ============ */
+/* скрываем футер giscus */
+.gsc-footer,
+footer,
+.gsc-comment-box-header + div > div:last-child {
+    display: none !important;
+}
+
+/* скрываем ссылки на giscus */
+a[href*="giscus.app"],
+a[href*="github.com/giscus"],
+[class*="giscus-branding"],
+[class*="powered-by"] {
+    display: none !important;
+}
+
+/* ============ КОМПАКТНОСТЬ ============ */
+
+/* уменьшаем отступы везде */
+.gsc-comment-box {
+    margin: 0.5rem 0 !important;
+    padding: 0.7rem !important;
+}
+
+.gsc-comment {
+    margin: 0.4rem 0 !important;
+    padding: 0.6rem !important;
+}
+
+.gsc-timeline {
+    margin: 0 !important;
+}
+
+/* уменьшаем заголовки */
+.gsc-comment-box-header,
+.gsc-comment-box-tabs {
+    padding: 0.4rem 0 !important;
+    margin: 0 !important;
+}
+
+/* поле ввода */
+.gsc-comment-box-textarea {
+    background: #0d0d0d !important;
+    border-color: #1c1c1c !important;
+    color: #c8c8c8 !important;
+    min-height: 80px !important;
+    padding: 0.6rem !important;
+    font-size: 0.85rem !important;
+}
+
+.gsc-comment-box-textarea:focus {
+    border-color: #b87333 !important;
+    box-shadow: 0 0 0 3px rgba(200, 120, 60, 0.15) !important;
+}
+
+/* кнопки */
+.gsc-comment-box-tabs button {
+    color: #999 !important;
+    font-size: 0.8rem !important;
+    padding: 0.3rem 0.8rem !important;
+}
+
+.gsc-comment-box-tabs button[aria-selected="true"] {
+    color: #b87333 !important;
+    border-color: #b87333 !important;
+}
+
+/* кнопка "Комментарий" */
+.gsc-comment-box button[type="submit"] {
+    background: #b87333 !important;
